@@ -1,0 +1,94 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <h1>PERSONAL LOAN</h1>
+            <h2>Product Features</h2>
+            <ul class="list-group">
+                <li class="list">Low interest rates. Further, we charge interest on a daily reducing balance!</li>
+
+                <li class="list">Low processing charges.</li>
+
+                <li class="list">No hidden cost / administrative charges.</li>
+
+                <li class="list">Minimal documentation...something that you had always wanted</li>
+
+                <li class="list"> No prepayment penalties. Reduce your interest burden and optimally utilize your
+                    surplus funds by prepaying the loan</li>
+            </ul>
+        </div>
+
+        <div class="col-8">
+            <form #myForm="ngForm" (ngSubmit)="onSignup(myForm)">
+                <div class="col-md-8">
+                    <label for="city" class="col-sm-2 col-form-label">City</label>
+                    <div class="col-sm-10">
+                        <input [(ngModel)]="user.city" type="text" class="form-control" id="city" name="city"
+                            placeholder="City" required>
+                    </div>
+                </div>
+
+                <br><br><br><br>
+                <div class="col-md-8">
+                    <label for="pan" class="col-sm-2 col-form-label">PAN</label>
+                    <div class="col-sm-10">
+                        <input [(ngModel)]="user.textPAN" type="text" class="PAN" id="textPAN" name="textPAN"
+                            placeholder="PAN Number" required>
+                        <span id="errorPAN" class="error">Invalid PAN Number</span>
+                    </div>
+                </div>
+
+                <br><br><br><br>
+                <div class="col-md-8">
+                    <label for="name" class="col-sm-2 col-form-label">Full Name</label>
+                    <div class="col-sm-10">
+                        <input [(ngModel)]="user.fullname" type="text" class="form-control" id="fullname"
+                            name="fullname" placeholder="Full name" required>
+                    </div>
+                </div>
+
+                <br><br><br><br>
+                <div class="col-md-8">
+                    <label for="email" class="col-sm-2 col-form-label">Email</label>
+                    <div class="col-sm-10">
+                        <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
+                            placeholder="Email">
+                    </div>
+                </div>
+
+                <br><br><br><br>
+                <div class="col-md-6">
+                    <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
+                    <div class="col-sm-10">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupPrepend2">+91</span>
+                            <input [(ngModel)]="user.mobile" type="number" class="form-control" id="mobile"
+                                name="mobile" placeholder="Mobile Number" aria-describedby="inputGroupPrepend2"
+                                required>
+                        </div>
+                    </div>
+                </div>
+
+                <br><br><br><br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success">Sign Up</button>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function ValidatePAN() {
+        var textPAN = document.getElementById("textPAN");
+        var errorPAN = document.getElementById("errorPAN")
+        var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
+        if (regex.test(textPAN.value.toUpperCase())) {
+            errorPAN.style.visibility = "hidden";
+            return true;
+        } else {
+            errorPAN.style.visibility = "visible";
+            return false;
+        }
+    }
+</script>
