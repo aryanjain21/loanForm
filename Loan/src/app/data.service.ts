@@ -12,6 +12,7 @@ export class DataService {
   }
 
   insertUserDetails(user) {
+    console.log(user);
     return this.http.post('http://lab.thinkoverit.com/api/getOTP.php', user);
   }
 }

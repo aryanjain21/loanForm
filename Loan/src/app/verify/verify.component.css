@@ -1,5 +1,14 @@
-.col-3{
+div.col-4{
     background-color:lightsteelblue;
-    height: 100%;
     
+}
+
+h1{
+    text-decoration: underline;
+}
+
+li.list{
+    line-height: 1.6;
+    margin-left: 30px;
+    margin: 20px;
 }

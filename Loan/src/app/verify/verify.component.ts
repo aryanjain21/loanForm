@@ -15,7 +15,7 @@ export class VerifyComponent implements OnInit {
   ngOnInit() {
     this.user = {
       "city": "Jodhpur",
-      "textPAN": "ARYAN8384A",
+      "panNumber": "ARYAN8384A",
       "fullname": "ARYAN JAIN",
       "email": "aryanjain1997@gmail.com",
       "mobile": "8384936821"
