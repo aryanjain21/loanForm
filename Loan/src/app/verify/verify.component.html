@@ -18,77 +18,91 @@
         </div>
 
         <div class="col-8">
-            <form #myForm="ngForm" (ngSubmit)="onSignup(myForm)">
-                <div class="col-md-8">
-                    <label for="city" class="col-sm-2 col-form-label">City</label>
-                    <div class="col-sm-10">
-                        <input [(ngModel)]="user.city" type="text" class="form-control" id="city" name="city"
-                            placeholder="City" required>
-                    </div>
-                </div>
-
-                <br><br><br><br>
-                <div class="col-md-8">
-                    <label for="pan" class="col-sm-2 col-form-label">PAN</label>
-                    <div class="col-sm-10">
-                        <input [(ngModel)]="user.panNumber" type="text" class="PAN" id="panNumber" name="panNumber"
-                            placeholder="PAN Number" required>
-                        <span id="errorPAN" class="error">Invalid PAN Number</span>
-                    </div>
-                </div>
-
-                <br><br><br><br>
-                <div class="col-md-8">
-                    <label for="name" class="col-sm-2 col-form-label">Full Name</label>
-                    <div class="col-sm-10">
-                        <input [(ngModel)]="user.fullname" type="text" class="form-control" id="fullname"
-                            name="fullname" placeholder="Full name" required>
-                    </div>
-                </div>
-
-                <br><br><br><br>
-                <div class="col-md-8">
-                    <label for="email" class="col-sm-2 col-form-label">Email</label>
-                    <div class="col-sm-10">
-                        <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
-                            placeholder="Email">
-                    </div>
-                </div>
-
-                <br><br><br><br>
-                <div class="col-md-6">
-                    <label for="mobile" class="col-sm-2 col-form-label">Mobile</label>
-                    <div class="col-sm-10">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroupPrepend2">+91</span>
-                            <input [(ngModel)]="user.mobile" type="number" class="form-control" id="mobile"
-                                name="mobile" placeholder="Mobile Number" aria-describedby="inputGroupPrepend2"
-                                required>
+            <div class="jumbotron">
+                <form #myForm="ngForm" (ngSubmit)="myForm.form.valid && onSignup()">
+                    <div class="col-md-8">
+                        <label for="name" class="col-form-label">Full Name</label>
+                        <div class="col-sm-10">
+                            <input [(ngModel)]="user.fullname" type="text" class="form-control" id="fullname"
+                                name="fullname" placeholder="Full name" required>
                         </div>
                     </div>
-                </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label for="email" class=" col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
+                                placeholder="Email">
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label for="city" class=" col-form-label">City</label>
+                        <div class="col-sm-10">
+                            <input [(ngModel)]="user.city" type="text" class="form-control" id="city" name="city"
+                                placeholder="City" required>
+                        </div>
+                    </div>
 
-                <br><br><br><br>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-success">Sign Up</button>
-                </div>
+                    <br>
+                    <div class="col-md-8">
+                        <label for="pan" class=" col-form-label">PAN</label>
+                        <div class="col-sm-10">
+                            <input [(ngModel)]="user.panNumber" type="text" class="PAN" id="panNumber" name="panNumber"
+                                placeholder="PAN Number" required>
+                            <span hidden id="errorPAN" class="error">Invalid PAN Number</span>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="col-md-6">
+                        <label for="mobile" class=" col-form-label">Mobile</label>
+                        <div class="col-sm-10">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroupPrepend2">+91</span>
+                                <input [(ngModel)]="user.mobile" type="number" class="form-control" id="mobile"
+                                    name="mobile" placeholder="Mobile Number" aria-describedby="inputGroupPrepend2"
+                                    required>
+                            </div>
+                        </div>
+                    </div>
 
-            </form>
+                    <br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success">Sign Up</button>
+                    </div>
+
+                </form>
+            </div>
+
         </div>
     </div>
 </div>
 
-<script type="text/javascript">
-    function ValidatePAN() {
-        var panNumber = document.getElementById("panNumber");
-        var errorPAN = document.getElementById("errorPAN")
-        var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
-        if (regex.test(panNumber.value.toUpperCase())) {
-            errorPAN.style.visibility = "hidden";
-            return true;
-        } else {
-            errorPAN.style.visibility = "visible";
-            return false;
-        }
-    }
-</script>
+
+
+<!-- The Modal -->
+<div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+        <form #myForm="ngForm" (ngSubmit)="otpValidate()">
+            <span class="close">&times;</span>
+            <div class="form">
+
+                <div class="otp-boxes">
+                    <div class="box"><input type="text" class="otp-input"></div>
+                    <div class="box"><input type="text" class="otp-input"></div>
+                    <div class="box"><input type="text" class="otp-input"></div>
+                    <div class="box"><input type="text" class="otp-input"></div>
+                </div>
+                <!-- <a href="#">Resend OTP</a> -->
+                <div>
+                    <button id="Resend-btn" class="button">Resend OTP</button>
+                    <button id="verify-btn" class="button">Verify OTP</button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+</div>

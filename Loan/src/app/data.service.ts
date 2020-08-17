@@ -15,4 +15,8 @@ export class DataService {
     console.log(user);
     return this.http.post('http://lab.thinkoverit.com/api/getOTP.php', user);
   }
+
+  insertOtpDetails(otpValid) {
+    return this.http.post('http://lab.thinkoverit.com/api/verifyOTP.php', otpValid);
+  }
 }
