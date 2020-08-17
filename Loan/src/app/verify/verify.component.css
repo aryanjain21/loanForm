@@ -33,7 +33,7 @@ li.list{
     margin: 15% auto; /* 15% from the top and centered */
     padding: 20px;
     border: 1px solid #888;
-    width: 80%; /* Could be more or less, depending on screen size */
+    width: 50%; /* Could be more or less, depending on screen size */
   }
   
   /* The Close Button */
@@ -74,4 +74,29 @@ li.list{
 
 .col-8{
   position: relative;
+}
+
+.label{
+  font-style: italic;
+  text-align: center;
+  color: red;
+}
+
+.popupBox .btnRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-content: space-between;
+}
+
+.popupBox{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: space-between;
+}
+
+.btnRow .mf{
+  margin: 10px;
 }

@@ -10,22 +10,25 @@ import { elementEventFullName } from '@angular/compiler/src/view_compiler/view_c
 })
 export class VerifyComponent implements OnInit {
 
+  msg = "";
   user: {};
   otpValid: {};
   constructor(private router: Router, private service: DataService) { }
 
   ngOnInit() {
+    this.resendCounter = 0;
+
     this.user = {
-      "city": "ppppppapa",
-      "panNumber": "llllaoala2222",
-      "fullname": "PPPPOAA",
-      "email": "llllll@mamaa.com",
-      "mobile": "111111222"
-    }
+      "city": "abc",
+      "panNumber": "ARYAN8384R",
+      "fullname": "Siddhesh",
+      "email": "sid@gmail.com",
+      "mobile": "9829983849"
+    };
 
     this.otpValid = {
-      "mobile": "this.user.mobile",
-      "otp": "2222"
+      "mobile": this.user['mobile'],
+      "otp": ""
     }
 
   }
@@ -36,40 +39,50 @@ export class VerifyComponent implements OnInit {
   flag: boolean;
 
   onSignup() {
-    if (this.validateUser() == false) {
-      alert("Name is required.");
-    } else if (this.ValidatePAN() == false) {
-      alert('PAN is required');
-    } else if (this.validateEmail() == false) {
-      alert('Email is required.');
-    } else if (this.validateMobile() == false) {
-      alert('Mobile is required');
-    } else if (this.validateCity() == false) {
-      alert("City is required.");
-    } else
-      if (this.validateForm()) {
-        let observableResult = this.service.insertUserDetails(this.user);
-        observableResult.subscribe((result: any) => {
-          console.log(result);
-          this.responseObj = result;
-          this.flag = this.responseObj.status == "Success" ? true : false;
-          // console.log(this.flag);
-          this.flag ? this.getModal() : alert("Invalid form");
-        }, error => {
-          alert("error" + error);
-        });
+    //console.log(this.user);
+    if (this.validateForm()) {
+      let observableResult = this.service.insertUserDetails(this.user);
+      observableResult.subscribe((result: any) => {
+        console.log(result);
+        this.responseObj = result;
+        this.flag = this.responseObj.status == "Success" ? true : false;
+        // 
+        // let otpdiv = document.getElementById("otpDiv");
+        // otpdiv.hidden = !this.flag;
+        console.log(this.flag);
+        this.flag ? this.getModal() : alert("Invalid form");
+      }, error => {
+        alert("error" + error);
+      });
+    }
+    else {
+      if (this.validateUser() == false) {
+        this.msg = "Name is required";
       }
+      if (this.ValidatePAN() == false) {
+        this.msg = "PAN is required";
+      }
+      if (this.validateEmail() == false) {
+        this.msg = "Email is required";
+      }
+      if (this.validateCity() == false) {
+        this.msg = "City is required";
+      }
+      if (this.validateMobile() == false) {
+        this.msg = "Mobile is required";
+      }
+    }
   }
 
   ValidatePAN() {
-    var panNumber = document.getElementById("panNumber");
-    var errorPAN = document.getElementById("errorPAN")
-    var regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
+    let panNumber = document.getElementById("panNumber");
+    // let errorPAN = document.getElementById("errorPAN")
+    let regex = /([A-Z]){5}([0-9]){4}([A-Z]){1}$/;
     if (regex.test(panNumber["value"].toUpperCase())) {
-      errorPAN.style.visibility = "hidden";
+      // errorPAN.style.visibility = "hidden";
       return true;
     } else {
-      errorPAN.style.visibility = "visible";
+      // errorPAN.style.visibility = "visible";
       return false;
     }
   }
@@ -87,7 +100,15 @@ export class VerifyComponent implements OnInit {
   validateMobile() {
     let mobile = this.user["mobile"];
     let regex: RegExp = /^[7-9][0-9]{9}$/;
+    //this.onSignup()
     return regex.test(mobile) ? true : false;
+  }
+  validateOtp() {
+    let op = this.otpValid["otp"];
+    console.log(op);
+    let regex: RegExp = /([0-9]){4}/;
+    console.log(regex.test(op));
+    return regex.test(op) ? true : false;
   }
   validateCity() {
     if (this.user["city"] !== "") {
@@ -103,16 +124,16 @@ export class VerifyComponent implements OnInit {
   }
 
   getModal() {
-    console.log("validate pan " + this.ValidatePAN());
+    //console.log("validate pan " + this.ValidatePAN());
 
     // Get the modal
-    var modal = document.getElementById("myModal");
+    let modal = document.getElementById("myModal");
 
     // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+    let btn = document.getElementById("myBtn");
 
     // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
+    let span = document.getElementsByClassName("close")[0];
 
     // When the user clicks on the button, open the modal 
 
@@ -132,29 +153,57 @@ export class VerifyComponent implements OnInit {
     }
   }
 
-  otpValidate() {
-    // var btn = document.getElementById('Resend-btn');
-    // setTimeout(function(){
-    //   btn.
-    // },2000)
-    let observableResult = this.service.insertOtpDetails(this.otpValid);
-    console.log(observableResult);
-    observableResult.subscribe((result: any) => {
-      console.log(result);
-      this.responseObj = result;
-      this.flag = this.responseObj.status == "Success" ? true : false;
-      //this.flag ? alert(`Thank you for verification xxxx . xxxx is fullname filled by user in form`) : alert("Invalid OTP");
+  resendCounter: number;
 
-    }, error => {
-      alert("error" + error);
-    });
-    if (this.flag == true) {
-      alert(`Thank you for verification ${this.user}. ${this.user} is fullname filled by user in form`)
-      // Get the modal
-      var modal = document.getElementById("myModal");
-      modal.style.display = "none";
+  resendOtp() {
+    let resendBtn = document.getElementById("Resend-btn");
+    resendBtn.setAttribute("disabled", "true");
+    ++this.resendCounter;
+
+    if (this.resendCounter < 3) {
+      this.onSignup();
+      setTimeout(() => {
+        resendBtn.removeAttribute("disabled");
+        console.log(this.resendCounter);
+      }, 180000)
     }
-    window.location.reload();
+    else if (this.resendCounter === 3) {
+      alert("Please try again after an hour.");
+      this.onSignup();
+      resendBtn.setAttribute("disabled", "true");
+    }
+
+  }
+
+  responseOtp = {
+    status: "",
+  }
+  flag2: boolean;
+
+  getOtp() {
+    console.log(this.user['mobile']);
+    console.log(this.otpValid)
+    if (this.validateOtp() == true) {
+      let observableResult = this.service.insertOtpDetails(this.otpValid);
+      console.log(observableResult);
+      observableResult.subscribe((result: any) => {
+        console.log(result);
+        this.responseOtp = result;
+        this.flag2 = this.responseOtp.status == "Success" ? true : false;
+        //this.flag ? alert(`Thank you for verification xxxx . xxxx is fullname filled by user in form`) : alert("Invalid OTP");
+        if (this.flag2 == true) {
+          alert(`Thank you for verification ${this.user["mobile"]}. ${this.user["fullname"]} is fullname filled by user in form`)
+          // Get the modal
+          let modal = document.getElementById("myModal");
+          modal.style.display = "none";
+        }
+      }, error => {
+        alert("error" + error);
+      });
+    } else {
+      alert("Invalid OTP");
+    }
+    this.router.navigate(['/verify'])
   }
 
 }

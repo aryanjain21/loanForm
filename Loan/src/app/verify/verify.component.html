@@ -15,30 +15,18 @@
                 <li class="list"> No prepayment penalties. Reduce your interest burden and optimally utilize your
                     surplus funds by prepaying the loan</li>
             </ul>
+            <img src="https://image.shutterstock.com/image-photo/business-concept-paper-tag-written-260nw-581362540.jpg"
+                alt="Loan Image">
         </div>
 
         <div class="col-8">
             <div class="jumbotron">
-                <form #myForm="ngForm" (ngSubmit)="myForm.form.valid && onSignup()">
-                    <div class="col-md-8">
-                        <label for="name" class="col-form-label">Full Name</label>
-                        <div class="col-sm-10">
-                            <input [(ngModel)]="user.fullname" type="text" class="form-control" id="fullname"
-                                name="fullname" placeholder="Full name" required>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="col-md-8">
-                        <label for="email" class=" col-form-label">Email</label>
-                        <div class="col-sm-10">
-                            <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
-                                placeholder="Email">
-                        </div>
-                    </div>
-                    <br>
+                <h5>Loan Application</h5>
+                <form #myForm="ngForm" (ngSubmit)="onSignup()">
+
                     <div class="col-md-8">
                         <label for="city" class=" col-form-label">City</label>
-                        <div class="col-sm-10">
+                        <div class="form-group">
                             <input [(ngModel)]="user.city" type="text" class="form-control" id="city" name="city"
                                 placeholder="City" required>
                         </div>
@@ -47,24 +35,45 @@
                     <br>
                     <div class="col-md-8">
                         <label for="pan" class=" col-form-label">PAN</label>
-                        <div class="col-sm-10">
+                        <div class="form-group">
                             <input [(ngModel)]="user.panNumber" type="text" class="PAN" id="panNumber" name="panNumber"
                                 placeholder="PAN Number" required>
                             <span hidden id="errorPAN" class="error">Invalid PAN Number</span>
                         </div>
                     </div>
+
+                    <br>
+                    <div class="col-md-8">
+                        <label for="name" class="col-form-label">Full Name</label>
+                        <div class="form-group">
+                            <input [(ngModel)]="user.fullname" type="text" class="form-control" id="fullname"
+                                name="fullname" placeholder="Full name" required>
+                        </div>
+                    </div>
+
+                    <br>
+                    <div class="col-md-8">
+                        <label for="email" class=" col-form-label">Email</label>
+                        <div class="form-group">
+                            <input [(ngModel)]="user.email" type="email" class="form-control" id="email" name="email"
+                                maxlength="255" placeholder="Email">
+                        </div>
+                    </div>
+
                     <br>
                     <div class="col-md-6">
                         <label for="mobile" class=" col-form-label">Mobile</label>
-                        <div class="col-sm-10">
+                        <div class="form-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text" id="inputGroupPrepend2">+91</span>
                                 <input [(ngModel)]="user.mobile" type="number" class="form-control" id="mobile"
-                                    name="mobile" placeholder="Mobile Number" aria-describedby="inputGroupPrepend2"
-                                    required>
+                                    name="mobile" placeholder="Mobile Number" pattern="/^[7-9][0-9]{9}$/"
+                                    aria-describedby="inputGroupPrepend2" required>
                             </div>
                         </div>
                     </div>
+
+                    <span class="label label-danger">{{msg}}</span>
 
                     <br>
                     <div class="form-group">
@@ -85,24 +94,32 @@
 
     <!-- Modal content -->
     <div class="modal-content">
-        <form #myForm="ngForm" (ngSubmit)="otpValidate()">
-            <span class="close">&times;</span>
-            <div class="form">
 
-                <div class="otp-boxes">
-                    <div class="box"><input type="text" class="otp-input"></div>
-                    <div class="box"><input type="text" class="otp-input"></div>
-                    <div class="box"><input type="text" class="otp-input"></div>
-                    <div class="box"><input type="text" class="otp-input"></div>
-                </div>
-                <!-- <a href="#">Resend OTP</a> -->
+        <span class="close">&times;</span>
+        <div class="popupBox">
+
+            <div id="otpDiv">
+                <!-- <label for="mobile" class=" col-form-label">Mobile</label>
                 <div>
-                    <button id="Resend-btn" class="button">Resend OTP</button>
-                    <button id="verify-btn" class="button">Verify OTP</button>
+                    <input [(ngModel)]="otpValid.mobile" id="mobile" readonly name="mobile" type="number" class="mobile"
+                        size="4">
+                </div> -->
+                <h2>OTP Verfication</h2>
+                <label for="otp" class=" col-form-label">OTP</label>
+                <div>
+                    <input [(ngModel)]="otpValid.otp" id="otp" name="otp" type="password" required class="otp" size="4"
+                        maxlength="4">
                 </div>
+            </div><br>
 
+            <div class="btnRow">
+                <button class="btn btn-secondary" id="Resend-btn" (click)="resendOtp()">Resend
+                    OTP</button>
+                <button class="btn btn-success" id="verify-btn" (click)="getOtp()">Verify OTP</button>
             </div>
-        </form>
+
+        </div>
+
     </div>
 
 </div>

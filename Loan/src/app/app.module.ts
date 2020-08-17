@@ -19,7 +19,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     RouterModule.forRoot([
-      // { path: "", component: VerifyComponent },
+      { path: "**", component: VerifyComponent },
       { path: "verify", component: VerifyComponent },
     ])
   ],
